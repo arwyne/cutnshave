@@ -1,9 +1,12 @@
 import React from "react"
+import { Container } from "react-bootstrap"
 
 const HomeScreen = () => {
   return (
     <>
-      <h1>Hellow World</h1>
+      <Container>
+        <h1>Cut 'N' Shave</h1>
+      </Container>
     </>
   )
 }
