@@ -13,6 +13,25 @@ const getServices = async (req, res) => {
   }
 }
 
+// @desc Fetch single service
+// @route GET /api/service/:id
+// @access Public
+const getServiceById = async (req, res) => {
+  try {
+    const service = await Service.findById(req.params.id)
+
+    if (service) {
+      res.json(service)
+    } else {
+      res.status(404)
+      throw new Error("Service not found")
+    }
+  } catch (error) {
+    res.status(400).send(error)
+  }
+}
+
 module.exports = {
   getServices,
+  getServiceById,
 }
