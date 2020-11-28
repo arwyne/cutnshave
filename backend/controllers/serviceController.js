@@ -14,7 +14,7 @@ const getServices = async (req, res) => {
 }
 
 // @desc Fetch single service
-// @route GET /api/service/:id
+// @route GET /api/services/:id
 // @access Public
 const getServiceById = async (req, res) => {
   try {
@@ -22,6 +22,25 @@ const getServiceById = async (req, res) => {
 
     if (service) {
       res.json(service)
+    } else {
+      res.status(404)
+      throw new Error("Service not found")
+    }
+  } catch (error) {
+    res.status(400).send(error)
+  }
+}
+
+// @desc Delete a service
+// @route DELETE /api/services/:id
+// @access Private/Admin
+const deleteService = async (req, res) => {
+  try {
+    const service = await Service.findById(req.params.id)
+
+    if (service) {
+      await service.remove()
+      res.json({ message: "Service removed" })
     } else {
       res.status(404)
       throw new Error("Service not found")
