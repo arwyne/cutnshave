@@ -50,7 +50,28 @@ const deleteService = async (req, res) => {
   }
 }
 
+// @desc Create a service
+// @route POST /api/services
+// @access Private/Admin
+const createService = async (req, res) => {
+  try {
+    const service = new Service({
+      service: req.body.service,
+      description: req.body.description,
+      price: req.body.price,
+      image: req.body.image,
+    })
+
+    const createdService = await service.save()
+    res.status(201).json(createdService)
+  } catch (error) {
+    res.status(400).send(error)
+  }
+}
+
 module.exports = {
   getServices,
   getServiceById,
+  deleteService,
+  createService,
 }
