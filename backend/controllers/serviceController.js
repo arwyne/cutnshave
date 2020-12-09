@@ -69,9 +69,34 @@ const createService = async (req, res) => {
   }
 }
 
+// @desc Update a service
+// @route PUT /api/products/:id
+// @access Private/Admin
+const updateService = async (req, res) => {
+  try {
+    const service = await Service.findById(req.params.id)
+
+    if (service) {
+      service.service = req.body.service
+      service.description = req.body.description
+      service.price = req.body.price
+      service.image = req.body.image
+
+      const updatedService = await service.save()
+      res.json(updatedService)
+    } else {
+      res.status(404)
+      throw new Error("Service not found")
+    }
+  } catch (error) {
+    res.status(400).send(error)
+  }
+}
+
 module.exports = {
   getServices,
   getServiceById,
   deleteService,
   createService,
+  updateService,
 }
